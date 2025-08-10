@@ -1,11 +1,1164 @@
 <!DOCTYPE html>
-<html lang="PT-BR">
+<html lang="pt-BR" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Carla Levita Training Center</title>
+    <meta name="description" content="Plataforma de treinamento esportivo com gerenciamento de horários, pagamentos e documentos">
+    <meta name="theme-color" content="#4F46E5">
+    <link rel="manifest" href="/manifest.json">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            light: '#4F46E5',
+                            dark: '#6366F1'
+                        },
+                        secondary: {
+                            light: '#7C3AED',
+                            dark: '#8B5CF6'
+                        },
+                        accent: '#10B981'
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.3s ease-in-out',
+                        'slide-up': 'slideUp 0.3s ease-out'
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .nav-circle {
+            width: 60px;
+            height: 60px;
+        }
+        .nav-circle.active {
+            transform: translateY(-15px);
+        }
+    </style>
 </head>
-<body>
-    
+<body class="min-h-full bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+    <!-- Theme Toggle -->
+    <button id="themeToggle" class="fixed top-4 right-4 z-50 p-2 rounded-full bg-white dark:bg-gray-800 shadow-md">
+        <i class="fas fa-sun text-yellow-500 dark:hidden"></i>
+        <i class="fas fa-moon text-indigo-300 hidden dark:inline"></i>
+    </button>
+
+    <!-- Main Content -->
+    <main class="pb-24">
+        <!-- Login Screen -->
+        <div id="loginScreen" class="min-h-screen flex flex-col justify-center items-center px-4">
+            <div class="w-full max-w-md bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 animate-fade-in">
+                <div class="text-center mb-8">
+                    <img src="https://picsum.photos/150?random=1" alt="Logo Carla Levita" class="mx-auto h-24 w-24 rounded-full">
+                    <h1 class="text-2xl font-bold text-gray-900 dark:text-white mt-4">Carla Levita Training Center</h1>
+                    <p class="text-gray-600 dark:text-gray-300 mt-2">Entre para acessar sua conta</p>
+                </div>
+                
+                <form class="space-y-6">
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">E-mail</label>
+                        <input type="email" id="email" class="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white">
+                    </div>
+                    
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Senha</label>
+                        <input type="password" id="password" class="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white">
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded dark:bg-gray-700">
+                            <label for="remember-me" class="ml-2 block text-sm text-gray-700 dark:text-gray-300">Lembrar-me</label>
+                        </div>
+                        
+                        <div class="text-sm">
+                            <a href="#" class="font-medium text-primary-600 hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300">Esqueceu sua senha?</a>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 dark:bg-primary-500 dark:hover:bg-primary-600">
+                            Entrar
+                        </button>
+                    </div>
+                </form>
+                
+                <div class="mt-6">
+                    <div class="relative">
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="w-full border-t border-gray-300 dark:border-gray-600"></div>
+                        </div>
+                        <div class="relative flex justify-center text-sm">
+                            <span class="px-2 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400">Ou entre como</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 grid grid-cols-2 gap-3">
+                        <button onclick="showUserDashboard()" class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-700 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                            Aluno
+                        </button>
+                        <button onclick="showAdminDashboard()" class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-700 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                            Administrador
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- User Dashboard -->
+        <div id="userDashboard" class="hidden min-h-screen px-4 pt-6 pb-24">
+            <div class="max-w-4xl mx-auto">
+                <div class="flex justify-between items-center mb-6">
+                    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Olá, João!</h1>
+                    <button class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+                        <i class="fas fa-bell"></i>
+                        <span class="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
+                    </button>
+                </div>
+
+                <!-- Status Card -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-4 mb-6 animate-slide-up">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-green-100 dark:bg-green-900 text-green-600 dark:text-green-300 mr-4">
+                            <i class="fas fa-check-circle text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-medium text-gray-900 dark:text-white">Plano Ativo</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Plano Intermediário - Vence em 15/10/2023</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="grid grid-cols-3 gap-3 mb-6">
+                    <button class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 flex flex-col items-center justify-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                        <div class="p-3 rounded-full bg-primary-100 dark:bg-primary-900 text-primary-600 dark:text-primary-300 mb-2">
+                            <i class="fas fa-calendar-plus"></i>
+                        </div>
+                        <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Agendar</span>
+                    </button>
+                    <button class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 flex flex-col items-center justify-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                        <div class="p-3 rounded-full bg-secondary-100 dark:bg-secondary-900 text-secondary-600 dark:text-secondary-300 mb-2">
+                            <i class="fas fa-file-upload"></i>
+                        </div>
+                        <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Documentos</span>
+                    </button>
+                    <button class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 flex flex-col items-center justify-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                        <div class="p-3 rounded-full bg-accent-100 dark:bg-accent-900 text-accent-600 dark:text-accent-300 mb-2">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                        <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Pagamentos</span>
+                    </button>
+                </div>
+
+                <!-- Schedules -->
+                <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Horários Disponíveis</h2>
+                <div class="space-y-3 mb-6">
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
+                        <div class="p-4 flex justify-between items-center">
+                            <div class="flex items-center">
+                                <div class="p-2 rounded-full bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 mr-3">
+                                    <i class="fas fa-dumbbell"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium text-gray-900 dark:text-white">Musculação</h3>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Com Carlos - 08:00 às 09:00</p>
+                                </div>
+                            </div>
+                            <span class="px-2 py-1 text-xs rounded-full bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">Disponível</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
+                        <div class="p-4 flex justify-between items-center">
+                            <div class="flex items-center">
+                                <div class="p-2 rounded-full bg-purple-100 dark:bg-purple-900 text-purple-600 dark:text-purple-300 mr-3">
+                                    <i class="fas fa-running"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium text-gray-900 dark:text-white">Funcional</h3>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Com Ana - 10:00 às 11:00</p>
+                                </div>
+                            </div>
+                            <span class="px-2 py-1 text-xs rounded-full bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200">Em breve</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
+                        <div class="p-4 flex justify-between items-center">
+                            <div class="flex items-center">
+                                <div class="p-2 rounded-full bg-red-100 dark:bg-red-900 text-red-600 dark:text-red-300 mr-3">
+                                    <i class="fas fa-swimmer"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium text-gray-900 dark:text-white">Natação</h3>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Com Pedro - 14:00 às 15:00</p>
+                                </div>
+                            </div>
+                            <span class="px-2 py-1 text-xs rounded-full bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200">Lotado</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Plans -->
+                <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Planos Disponíveis</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden border-2 border-gray-200 dark:border-gray-700">
+                        <div class="p-4 bg-gray-50 dark:bg-gray-700">
+                            <h3 class="text-lg font-bold text-center text-gray-900 dark:text-white">Iniciante</h3>
+                            <p class="text-center text-gray-600 dark:text-gray-400">2x por semana</p>
+                        </div>
+                        <div class="p-4">
+                            <p class="text-3xl font-bold text-center text-primary-600 dark:text-primary-400 mb-4">R$ 120<span class="text-sm font-normal text-gray-600 dark:text-gray-400">/mês</span></p>
+                            <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                <li class="flex items-center">
+                                    <i class="fas fa-check text-green-500 mr-2"></i>
+                                    Acesso a 2 modalidades
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-check text-green-500 mr-2"></i>
+                                    Horário fixo
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-check text-green-500 mr-2"></i>
+                                    Acompanhamento básico
+                                </li>
+                            </ul>
+                            <button class="mt-4 w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 dark:bg-primary-500 dark:hover:bg-primary-600">
+                                Assinar
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden border-2 border-primary-500 dark:border-primary-400 transform scale-105">
+                        <div class="p-4 bg-primary-500 dark:bg-primary-600">
+                            <h3 class="text-lg font-bold text-center text-white">Intermediário</h3>
+                            <p class="text-center text-primary-100">3x por semana</p>
+                        </div>
+                        <div class="p-4">
+                            <p class="text-3xl font-bold text-center text-primary-600 dark:text-primary-400 mb-4">R$ 180<span class="text-sm font-normal text-gray-600 dark:text-gray-400">/mês</span></p>
+                            <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                <li class="flex items-center">
+                                    <i class="fas fa-check text-green-500 mr-2"></i>
+                                    Acesso a 4 modalidades
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-check text-green-500 mr-2"></i>
+                                    Horário flexível
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-check text-green-500 mr-2"></i>
+                                    Acompanhamento personalizado
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-check text-green-500 mr-2"></i>
+                                    Avaliação física mensal
+                                </li>
+                            </ul>
+                            <button class="mt-4 w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 dark:bg-primary-500 dark:hover:bg-primary-600">
+                                Assinar
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden border-2 border-gray-200 dark:border-gray-700">
+                        <div class="p-4 bg-gray-50 dark:bg-gray-700">
+                            <h3 class="text-lg font-bold text-center text-gray-900 dark:text-white">Avançado</h3>
+                            <p class="text-center text-gray-600 dark:text-gray-400">5x por semana</p>
+                        </div>
+                        <div class="p-4">
+                            <p class="text-3xl font-bold text-center text-primary-600 dark:text-primary-400 mb-4">R$ 250<span class="text-sm font-normal text-gray-600 dark:text-gray-400">/mês</span></p>
+                            <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                <li class="flex items-center">
+                                    <i class="fas fa-check text-green-500 mr-2"></i>
+                                    Acesso ilimitado
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-check text-green-500 mr-2"></i>
+                                    Horário flexível
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-check text-green-500 mr-2"></i>
+                                    Treino personalizado
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-check text-green-500 mr-2"></i>
+                                    Avaliação física semanal
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-check text-green-500 mr-2"></i>
+                                    Nutrição básica
+                                </li>
+                            </ul>
+                            <button class="mt-4 w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 dark:bg-primary-500 dark:hover:bg-primary-600">
+                                Assinar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Dashboard -->
+        <div id="adminDashboard" class="hidden min-h-screen px-4 pt-6 pb-24">
+            <div class="max-w-6xl mx-auto">
+                <div class="flex justify-between items-center mb-6">
+                    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Painel Administrativo</h1>
+                    <div class="flex items-center space-x-4">
+                        <button class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 relative">
+                            <i class="fas fa-bell"></i>
+                            <span class="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
+                        </button>
+                        <button onclick="showLoginScreen()" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Alunos Ativos</p>
+                                <p class="text-2xl font-bold text-gray-900 dark:text-white">142</p>
+                            </div>
+                            <div class="p-3 rounded-full bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300">
+                                <i class="fas fa-users"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Horários Ocupados</p>
+                                <p class="text-2xl font-bold text-gray-900 dark:text-white">87%</p>
+                            </div>
+                            <div class="p-3 rounded-full bg-green-100 dark:bg-green-900 text-green-600 dark:text-green-300">
+                                <i class="fas fa-calendar-check"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Pagamentos Pendentes</p>
+                                <p class="text-2xl font-bold text-gray-900 dark:text-white">8</p>
+                            </div>
+                            <div class="p-3 rounded-full bg-yellow-100 dark:bg-yellow-900 text-yellow-600 dark:text-yellow-300">
+                                <i class="fas fa-exclamation-circle"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Documentos Pendentes</p>
+                                <p class="text-2xl font-bold text-gray-900 dark:text-white">5</p>
+                            </div>
+                            <div class="p-3 rounded-full bg-red-100 dark:bg-red-900 text-red-600 dark:text-red-300">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabs -->
+                <div class="mb-6 border-b border-gray-200 dark:border-gray-700">
+                    <ul class="flex flex-wrap -mb-px" id="adminTabs" role="tablist">
+                        <li class="mr-2" role="presentation">
+                            <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="schedules-tab" data-tabs-target="#schedules" type="button" role="tab" aria-controls="schedules" aria-selected="false">Horários</button>
+                        </li>
+                        <li class="mr-2" role="presentation">
+                            <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="payments-tab" data-tabs-target="#payments" type="button" role="tab" aria-controls="payments" aria-selected="false">Pagamentos</button>
+                        </li>
+                        <li class="mr-2" role="presentation">
+                            <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="documents-tab" data-tabs-target="#documents" type="button" role="tab" aria-controls="documents" aria-selected="false">Documentos</button>
+                        </li>
+                        <li class="mr-2" role="presentation">
+                            <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="reports-tab" data-tabs-target="#reports" type="button" role="tab" aria-controls="reports" aria-selected="false">Relatórios</button>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Tab Content -->
+                <div id="adminTabContent">
+                    <!-- Schedules Tab -->
+                    <div class="hidden p-4 rounded-lg bg-white dark:bg-gray-800 shadow" id="schedules" role="tabpanel" aria-labelledby="schedules-tab">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="text-xl font-bold text-gray-900 dark:text-white">Gerenciamento de Horários</h2>
+                            <button class="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-md text-sm font-medium">
+                                <i class="fas fa-plus mr-2"></i>Novo Horário
+                            </button>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                <thead class="bg-gray-50 dark:bg-gray-700">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Modalidade</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Instrutor</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Horário</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Status</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 h-10 w-10">
+                                                    <i class="fas fa-dumbbell text-blue-500 text-xl"></i>
+                                                </div>
+                                                <div class="ml-4">
+                                                    <div class="text-sm font-medium text-gray-900 dark:text-white">Musculação</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900 dark:text-white">Carlos Silva</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900 dark:text-white">08:00 - 09:00</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">Ativo</span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                                            <button class="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300 mr-3">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">
+                                                <i class="fas fa-lock"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 h-10 w-10">
+                                                    <i class="fas fa-running text-purple-500 text-xl"></i>
+                                                </div>
+                                                <div class="ml-4">
+                                                    <div class="text-sm font-medium text-gray-900 dark:text-white">Funcional</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900 dark:text-white">Ana Paula</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900 dark:text-white">10:00 - 11:00</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200">Pendente</span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                                            <button class="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300 mr-3">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="text-green-600 hover:text-green-900 dark:text-green-400 dark:hover:text-green-300 mr-3">
+                                                <i class="fas fa-check"></i>
+                                            </button>
+                                            <button class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 h-10 w-10">
+                                                    <i class="fas fa-swimmer text-red-500 text-xl"></i>
+                                                </div>
+                                                <div class="ml-4">
+                                                    <div class="text-sm font-medium text-gray-900 dark:text-white">Natação</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900 dark:text-white">Pedro Henrique</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900 dark:text-white">14:00 - 15:00</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200">Bloqueado</span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                                            <button class="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300 mr-3">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="text-green-600 hover:text-green-900 dark:text-green-400 dark:hover:text-green-300">
+                                                <i class="fas fa-unlock"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Payments Tab -->
+                    <div class="hidden p-4 rounded-lg bg-white dark:bg-gray-800 shadow" id="payments" role="tabpanel" aria-labelledby="payments-tab">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="text-xl font-bold text-gray-900 dark:text-white">Gerenciamento de Pagamentos</h2>
+                            <div class="flex space-x-2">
+                                <button class="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-md text-sm font-medium">
+                                    <i class="fas fa-plus mr-2"></i>Novo Pagamento
+                                </button>
+                                <button class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md text-sm font-medium">
+                                    <i class="fas fa-file-export mr-2"></i>Exportar
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                <thead class="bg-gray-50 dark:bg-gray-700">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Aluno</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Plano</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Valor</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Método</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Status</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Vencimento</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 h-10 w-10">
+                                                    <img class="h-10 w-10 rounded-full" src="https://picsum.photos/100?random=2" alt="">
+                                                </div>
+                                                <div class="ml-4">
+                                                    <div class="text-sm font-medium text-gray-900 dark:text-white">João Silva</div>
+                                                    <div class="text-sm text-gray-500 dark:text-gray-400">joao@email.com</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900 dark:text-white">Intermediário</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900 dark:text-white">R$ 180,00</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900 dark:text-white">Pix</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">Pago</span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900 dark:text-white">15/10/2023</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                                            <button class="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300 mr-3">
+                                                <i class="fas fa-print"></i>
+                                            </button>
+                                            <button class="text-yellow-600 hover:text-yellow-900 dark:text-yellow-400 dark:hover:text-yellow-300">
+                                                <i class="fas fa-envelope"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 h-10 w-10">
+                                                    <img class="h-10 w-10 rounded-full" src="https://picsum.photos/100?random=3" alt="">
+                                                </div>
+                                                <div class="ml-4">
+                                                    <div class="text-sm font-medium text-gray-900 dark:text-white">Maria Oliveira</div>
+                                                    <div class="text-sm text-gray-500 dark:text-gray-400">maria@email.com</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900 dark:text-white">Avançado</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900 dark:text-white">R$ 250,00</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900 dark:text-white">Cartão</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200">Pendente</span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900 dark:text-white">10/10/2023</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                                            <button class="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300 mr-3">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="text-green-600 hover:text-green-900 dark:text-green-400 dark:hover:text-green-300 mr-3">
+                                                <i class="fas fa-check"></i>
+                                            </button>
+                                            <button class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 h-10 w-10">
+                                                    <img class="h-10 w-10 rounded-full" src="https://picsum.photos/100?random=4" alt="">
+                                                </div>
+                                                <div class="ml-4">
+                                                    <div class="text-sm font-medium text-gray-900 dark:text-white">Carlos Souza</div>
+                                                    <div class="text-sm text-gray-500 dark:text-gray-400">carlos@email.com</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900 dark:text-white">Iniciante</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900 dark:text-white">R$ 120,00</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900 dark:text-white">Dinheiro</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200">Atrasado</span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900 dark:text-white">05/10/2023</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                                            <button class="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300 mr-3">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="text-green-600 hover:text-green-900 dark:text-green-400 dark:hover:text-green-300 mr-3">
+                                                <i class="fas fa-check"></i>
+                                            </button>
+                                            <button class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">
+                                                <i class="fas fa-user-slash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Documents Tab -->
+                    <div class="hidden p-4 rounded-lg bg-white dark:bg-gray-800 shadow" id="documents" role="tabpanel" aria-labelledby="documents-tab">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="text-xl font-bold text-gray-900 dark:text-white">Gerenciamento de Documentos</h2>
+                            <button class="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-md text-sm font-medium">
+                                <i class="fas fa-plus mr-2"></i>Novo Documento
+                            </button>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                <thead class="bg-gray-50 dark:bg-gray-700">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Aluno</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Tipo</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Data</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Status</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 h-10 w-10">
+                                                    <img class="h-10 w-10 rounded-full" src="https://picsum.photos/100?random=5" alt="">
+                                                </div>
+                                                <div class="ml-4">
+                                                    <div class="text-sm font-medium text-gray-900 dark:text-white">Ana Costa</div>
+                                                    <div class="text-sm text-gray-500 dark:text-gray-400">ana@email.com</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900 dark:text-white">Atestado Médico</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900 dark:text-white">01/10/2023</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">Aprovado</span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                                            <button class="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300 mr-3">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="text-yellow-600 hover:text-yellow-900 dark:text-yellow-400 dark:hover:text-yellow-300">
+                                                <i class="fas fa-download"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 h-10 w-10">
+                                                    <img class="h-10 w-10 rounded-full" src="https://picsum.photos/100?random=6" alt="">
+                                                </div>
+                                                <div class="ml-4">
+                                                    <div class="text-sm font-medium text-gray-900 dark:text-white">Pedro Alves</div>
+                                                    <div class="text-sm text-gray-500 dark:text-gray-400">pedro@email.com</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900 dark:text-white">Justificativa</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900 dark:text-white">28/09/2023</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200">Pendente</span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                                            <button class="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300 mr-3">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="text-green-600 hover:text-green-900 dark:text-green-400 dark:hover:text-green-300 mr-3">
+                                                <i class="fas fa-check"></i>
+                                            </button>
+                                            <button class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 h-10 w-10">
+                                                    <img class="h-10 w-10 rounded-full" src="https://picsum.photos/100?random=7" alt="">
+                                                </div>
+                                                <div class="ml-4">
+                                                    <div class="text-sm font-medium text-gray-900 dark:text-white">Luiza Mendes</div>
+                                                    <div class="text-sm text-gray-500 dark:text-gray-400">luiza@email.com</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900 dark:text-white">Solicitação de Suspensão</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900 dark:text-white">25/09/2023</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200">Rejeitado</span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                                            <button class="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300 mr-3">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="text-yellow-600 hover:text-yellow-900 dark:text-yellow-400 dark:hover:text-yellow-300">
+                                                <i class="fas fa-download"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Reports Tab -->
+                    <div class="hidden p-4 rounded-lg bg-white dark:bg-gray-800 shadow" id="reports" role="tabpanel" aria-labelledby="reports-tab">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="text-xl font-bold text-gray-900 dark:text-white">Relatórios</h2>
+                            <button class="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-md text-sm font-medium">
+                                <i class="fas fa-file-export mr-2"></i>Exportar Tudo
+                            </button>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                                <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Alunos Ativos por Plano</h3>
+                                <div class="h-64">
+                                    <!-- Chart placeholder -->
+                                    <div class="flex items-center justify-center h-full bg-gray-100 dark:bg-gray-700 rounded">
+                                        <p class="text-gray-500 dark:text-gray-400">Gráfico de alunos ativos por plano</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                                <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Ocupação de Horários</h3>
+                                <div class="h-64">
+                                    <!-- Chart placeholder -->
+                                    <div class="flex items-center justify-center h-full bg-gray-100 dark:bg-gray-700 rounded">
+                                        <p class="text-gray-500 dark:text-gray-400">Gráfico de ocupação de horários</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                                <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Pagamentos por Mês</h3>
+                                <div class="h-64">
+                                    <!-- Chart placeholder -->
+                                    <div class="flex items-center justify-center h-full bg-gray-100 dark:bg-gray-700 rounded">
+                                        <p class="text-gray-500 dark:text-gray-400">Gráfico de pagamentos por mês</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                                <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Histórico de Reservas</h3>
+                                <div class="h-64">
+                                    <!-- Chart placeholder -->
+                                    <div class="flex items-center justify-center h-full bg-gray-100 dark:bg-gray-700 rounded">
+                                        <p class="text-gray-500 dark:text-gray-400">Gráfico de histórico de reservas</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add 'Cadastrar Aluno' button -->
+        <div class="fixed top-4 left-4 z-50">
+            <button onclick="showRegistrationScreen()" class="p-2 rounded-full bg-primary-600 text-white shadow-md hover:bg-primary-700">
+                Cadastrar Aluno
+            </button>
+        </div>
+
+        <!-- Agenda Section -->
+        <div id="agendaSection" class="hidden min-h-screen px-4 pt-6 pb-24">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Agenda</h2>
+                <div class="mb-6">
+                    <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-200">Agendar Horário</h3>
+                    <form class="space-y-4">
+                        <div>
+                            <label for="date" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Data</label>
+                            <input type="date" id="date" class="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white">
+                        </div>
+                        <div>
+                            <label for="time" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Horário</label>
+                            <input type="time" id="time" class="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white">
+                        </div>
+                        <button type="submit" class="w-full py-2 px-4 bg-primary-600 text-white rounded-md shadow-md hover:bg-primary-700">
+                            Confirmar Agendamento
+                        </button>
+                    </form>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-200">Horários Fixos</h3>
+                    <ul class="space-y-4 mt-4">
+                        <li class="bg-white dark:bg-gray-800 p-4 rounded-md shadow">
+                            <p class="text-gray-800 dark:text-gray-200">Musculação com Carlos - 08:00 às 09:00</p>
+                        </li>
+                        <li class="bg-white dark:bg-gray-800 p-4 rounded-md shadow">
+                            <p class="text-gray-800 dark:text-gray-200">Funcional com Ana - 10:00 às 11:00</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Documentos Section -->
+        <div id="documentosSection" class="hidden min-h-screen px-4 pt-6 pb-24">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Documentos</h2>
+                <div class="mb-6">
+                    <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-200">Enviar Documentos</h3>
+                    <form class="space-y-4">
+                        <div>
+                            <label for="fileUpload" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Certificado Médico</label>
+                            <input type="file" id="fileUpload" class="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white">
+                        </div>
+                        <button type="submit" class="w-full py-2 px-4 bg-primary-600 text-white rounded-md shadow-md hover:bg-primary-700">
+                            Enviar
+                        </button>
+                    </form>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-200">Informações do Plano</h3>
+                    <ul class="space-y-4 mt-4">
+                        <li class="bg-white dark:bg-gray-800 p-4 rounded-md shadow">
+                            <p class="text-gray-800 dark:text-gray-200">Plano Atual: Intermediário</p>
+                        </li>
+                        <li class="bg-white dark:bg-gray-800 p-4 rounded-md shadow">
+                            <p class="text-gray-800 dark:text-gray-200">Vencimento: 15/10/2023</p>
+                        </li>
+                        <li class="bg-white dark:bg-gray-800 p-4 rounded-md shadow">
+                            <p class="text-gray-800 dark:text-gray-200">Pagamento: Em dia</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagamentos Section -->
+        <div id="pagamentosSection" class="hidden min-h-screen px-4 pt-6 pb-24">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Pagamentos</h2>
+                <div class="mb-6">
+                    <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-200">Selecionar Plano</h3>
+                    <ul class="space-y-4 mt-4">
+                        <li class="bg-white dark:bg-gray-800 p-4 rounded-md shadow">
+                            <p class="text-gray-800 dark:text-gray-200">Plano Iniciante - R$ 120/mês</p>
+                            <button class="mt-2 py-2 px-4 bg-primary-600 text-white rounded-md shadow-md hover:bg-primary-700">
+                                Assinar
+                            </button>
+                        </li>
+                        <li class="bg-white dark:bg-gray-800 p-4 rounded-md shadow">
+                            <p class="text-gray-800 dark:text-gray-200">Plano Intermediário - R$ 180/mês</p>
+                            <button class="mt-2 py-2 px-4 bg-primary-600 text-white rounded-md shadow-md hover:bg-primary-700">
+                                Assinar
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-200">Métodos de Pagamento</h3>
+                    <div class="space-y-4 mt-4">
+                        <div class="bg-white dark:bg-gray-800 p-4 rounded-md shadow">
+                            <p class="text-gray-800 dark:text-gray-200">Pix</p>
+                        </div>
+                        <div class="bg-white dark:bg-gray-800 p-4 rounded-md shadow">
+                            <p class="text-gray-800 dark:text-gray-200">Cartão de Crédito</p>
+                        </div>
+                        <div class="bg-white dark:bg-gray-800 p-4 rounded-md shadow">
+                            <p class="text-gray-800 dark:text-gray-200">Cartão de Débito</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav id="bottomNav" class="hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 shadow-lg">
+        <div class="container mx-auto px-4 py-2">
+            <div class="flex justify-around items-center">
+                <button class="flex flex-col items-center justify-center text-primary-600 dark:text-primary-400">
+                    <div class="nav-circle bg-primary-100 dark:bg-primary-900 rounded-full flex items-center justify-center mb-1">
+                        <i class="fas fa-home text-xl"></i>
+                    </div>
+                    <span class="text-xs">Início</span>
+                </button>
+                <button class="flex flex-col items-center justify-center text-gray-600 dark:text-gray-400">
+                    <div class="nav-circle bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mb-1">
+                        <i class="fas fa-calendar-alt text-xl"></i>
+                    </div>
+                    <span class="text-xs">Agenda</span>
+                </button>
+                <button class="flex flex-col items-center justify-center text-gray-600 dark:text-gray-400">
+                    <div class="nav-circle bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mb-1">
+                        <i class="fas fa-file-alt text-xl"></i>
+                    </div>
+                    <span class="text-xs">Documentos</span>
+                </button>
+                <button class="flex flex-col items-center justify-center text-gray-600 dark:text-gray-400">
+                    <div class="nav-circle bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mb-1">
+                        <i class="fas fa-credit-card text-xl"></i>
+                    </div>
+                    <span class="text-xs">Pagamentos</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Service Worker Registration -->
+    <script>
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').then(registration => {
+                    console.log('ServiceWorker registration successful');
+                }).catch(err => {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+        });
+
+        // Check for saved theme preference
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+        }
+
+        // Screen Navigation
+        function showLoginScreen() {
+            document.getElementById('loginScreen').classList.remove('hidden');
+            document.getElementById('userDashboard').classList.add('hidden');
+            document.getElementById('adminDashboard').classList.add('hidden');
+            document.getElementById('bottomNav').classList.add('hidden');
+        }
+
+        function showUserDashboard() {
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('userDashboard').classList.remove('hidden');
+            document.getElementById('adminDashboard').classList.add('hidden');
+            document.getElementById('bottomNav').classList.remove('hidden');
+        }
+
+        function showAdminDashboard() {
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('userDashboard').classList.add('hidden');
+            document.getElementById('adminDashboard').classList.remove('hidden');
+            document.getElementById('bottomNav').classList.add('hidden');
+        }
+
+        // Tab Navigation
+        const tabs = document.querySelectorAll('[data-tabs-target]');
+        const tabContents = document.querySelectorAll('[role="tabpanel"]');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const target = document.querySelector(tab.dataset.tabsTarget);
+                
+                // Hide all tab contents
+                tabContents.forEach(content => {
+                    content.classList.add('hidden');
+                });
+                
+                // Show selected tab content
+                target.classList.remove('hidden');
+                
+                // Update active tab styling
+                tabs.forEach(t => {
+                    t.classList.remove('border-primary-600', 'text-primary-600', 'dark:border-primary-400', 'dark:text-primary-400');
+                });
+                
+                tab.classList.add('border-primary-600', 'text-primary-600', 'dark:border-primary-400', 'dark:text-primary-400');
+            });
+        });
+
+        // Initialize first tab as active
+        if (tabs.length > 0) {
+            tabs[0].classList.add('border-primary-600', 'text-primary-600', 'dark:border-primary-400', 'dark:text-primary-400');
+            tabs[0].click();
+        }
+
+        // Sample data for the app
+        const schedules = [
+            {
+                id: 1,
+                sport: "Musculação",
+                instructor: "Carlos Silva",
+                time: "08:00 - 09:00",
+                status: "active"
+            },
+            {
+                id: 2,
+                sport: "Funcional",
+                instructor: "Ana Paula",
+                time: "10:00 - 11:00",
+                status: "pending"
+            },
+            {
+                id: 3,
+                sport: "Natação",
+                instructor: "Pedro Henrique",
+                time: "14:00 - 15:00",
+                status: "blocked"
+            }
+        ];
+
+        const payments = [
+            {
+                id: 1,
+                student: "João Silva",
+                email: "joao@email.com",
+                plan: "Intermediário",
+                amount: 180,
+                method: "Pix",
+                status: "paid",
+                dueDate: "15/10/2023"
+            },
+            {
+                id: 2,
+                student: "Maria Oliveira",
+                email: "maria@email.com",
+                plan: "Avançado",
+                amount: 250,
+                method: "Cartão",
+                status: "pending",
+                dueDate: "10/10/2023"
+            },
+            {
+                id: 3,
+                student: "Carlos Souza",
+                email: "carlos@email.com",
+                plan: "Iniciante",
+                amount: 120,
+                method: "Dinheiro",
+                status: "overdue",
+                dueDate: "05/10/2023"
+            }
+        ];
+
+        const documents = [
+            {
+                id: 1,
+                student: "Ana Costa",
+                email: "ana@email.com",
+                type: "Atestado Médico",
+                date: "01/10/2023",
+                status: "approved"
+            },
+            {
+                id: 2,
+                student: "Pedro Alves",
+                email: "pedro@email.com",
+                type: "Justificativa",
+                date: "28/09/2023",
+                status: "pending"
+            },
+            {
+                id: 3,
+                student: "Luiza Mendes",
+                email: "luiza@email.com",
+                type: "Solicitação de Suspensão",
+                date: "25/09/2023",
+                status: "rejected"
+            }
+        ];
+    </script>
 </body>
 </html>
